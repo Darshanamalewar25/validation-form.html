@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: hsl(174, 82%, 49%);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        text-align: center;
+    }
+    form {
+        margin-top: 20px;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+    }
+    input[type="radio"], input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-top: -8px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Survey Form</h2>
+    <form id="surveyForm" action="#" method="post" onsubmit="return validateForm()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+        <span id="emailError" class="error"></span>
+
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" required>
+        <span id="ageError" class="error"></span>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <span id="genderError" class="error"></span>
+
+        <label>Do you have any dietary restrictions?</label>
+        <input type="checkbox" id="vegan" name="diet" value="vegan">
+        <label for="vegan">Vegan</label>
+        <input type="checkbox" id="vegetarian" name="diet" value="vegetarian">
+        <label for="vegetarian">Vegetarian</label>
+        <input type="checkbox" id="glutenFree" name="diet" value="glutenFree">
+        <label for="glutenFree">Gluten Free</label>
+
+        <label>Which of the following best describes your current employment status?</label>
+        <input type="radio" id="employed" name="employment" value="employed" required>
+        <label for="employed">Employed</label>
+        <input type="radio" id="unemployed" name="employment" value="unemployed">
+        <label for="unemployed">Unemployed</label>
+        <input type="radio" id="student" name="employment" value="student">
+        <label for="student">Student</label>
+        <span id="employmentError" class="error"></span>
+
+        <label for="comments">Comments:</label>
+        <textarea id="comments" name="comments"></textarea>
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<script>
+function validateForm() {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var age = document.getElementById("age").value;
+    var gender = document.getElementById("gender").value;
+    var employed = document.getElementById("employed").checked;
+    var unemployed = document.getElementById("unemployed").checked;
+    var student = document.getElementById("student").checked;
+    
+    var nameError = document.getElementById("nameError");
+    var emailError = document.getElementById("emailError");
+    var ageError = document.getElementById("ageError");
+    var genderError = document.getElementById("genderError");
+    var employmentError = document.getElementById("employmentError");
+    
+    var isValid = true;
+
+    // Name validation
+    if (name == "") {
+        nameError.textContent = "Name is required";
+        isValid = false;
+    } else {
+        nameError.textContent = "";
+    }
+
+    // Email validation (basic pattern)
+    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+        emailError.textContent = "Invalid email format";
+        isValid = false;
+    } else {
+        emailError.textContent = "";
+    }
+
+    // Age validation (positive number)
+    if (isNaN(age) || age <= 0) {
+        ageError.textContent = "Age must be a positive number";
+        isValid = false;
+    } else {
+        ageError.textContent = "";
+    }
+
+    // Gender validation
+    if (gender == "") {
+        genderError.textContent = "Please select a gender";
+        isValid = false;
+    } else {
+        genderError.textContent = "";
+    }
+
+    // Employment status validation
+    if (!employed && !unemployed && !student) {
+        employmentError.textContent = "Please select an employment status";
+        isValid = false;
+    } else {
+        employmentError.textContent = "";
+    }
+
+    return isValid;
+}
+</script>
+
+</body>
+</html>
